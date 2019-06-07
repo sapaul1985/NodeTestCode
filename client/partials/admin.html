@@ -1,0 +1,71 @@
+<head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Customer Feedback</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" media="screen" href="/index.css" />
+</head>
+<body>
+    <div class="title">
+        <div class="title-img"></div>
+    </div>
+    <div id="nav">
+        <div ng-controller='sessionController'>
+        <h2>Control Board</h2>
+        <h3>Logged in as {{currentUser.user}}</h3>
+        <a href="#!/customer_feedback">Customer Feedback Form</a><br>
+        <a href="#!/lab_feedback">Lab Manager Feedback Form</a><br>
+        <a href="#!/feedback">What customers are saying</a><br>
+        <a href="#!/excalibur">View and update Excalibur IDs</a><br>
+        <div>
+            <label>Create new user</label><br>
+            <input type="text" ng-model="newUser.name" placeholder="Name"><br>
+            <input type="password" ng-model="newUser.password" placeholder="Password"><br>
+            <select ng-model="newUser.level" ng-options="n for n in [1,8,9]"></select>
+            <input type="submit" value="Create" ng-click="createUser()">
+        </div>
+        <div>
+            <label>View all users</label><br>
+            <input type="submit" value="See all" ng-click="index()"><br>
+            <div id="index" style="visibility:hidden">
+                <li ng-repeat="x in users" style="list-style:none">
+                    {{x.user}} has access level {{x.level}}
+                    <input type="submit" value="Delete" ng-click="delete(x._id)">
+                </li>
+            </div>
+        </div>
+    </div>
+    <a href="/logout">Logout</a>
+    <br>
+    <br>
+    <div ng-controller='customerVisitsController'>
+        <input type="radio" name="Cwhere" value="Redmond" ng-model="path">Redmond
+        <input type="radio" name="Cwhere" value="Noida" ng-model="path">Noida
+        <input type="submit" value="Customer Excel" ng-click="createFromFile()"> 
+        <input type="submit" value="Purge Customer Visits" ng-click="purge()">
+    <div ng-controller='labController'>
+        <input type="radio" name="Lwhere" value="Redmond" ng-model="path">Redmond
+        <input type="radio" name="Lwhere" value="Noida" ng-model="path">Noida
+        <input type="submit" value="Lab Excel" ng-click="createFromFile()">
+        <input type="submit" value="Purge Lab Visits" ng-click="purge()">
+        <br>
+        <br>
+        <div class="search-visits">
+            <label>Month</label><select ng-model="date.month" ng-options="n.name for n in date.months"></select>
+            <label>Year</label><select ng-model="date.year" ng-options="n for n in date.years"></select>
+            <input type="submit" value="Search" ng-click=getVisits()>
+            <div id="update" style="visibility: hidden" ng-model='updatevisit'>
+                <ul>
+                    <li ng-repeat="x in visits" style="list-style:none"><h4>{{x.customer}} visit on {{x.date | date:'MM/dd/yyyy'}} has the current 
+                        Excalibur ID: <strong>{{x.excalibur}}</strong>.</h4>
+                        <input type="submit" value="Delete" ng-click=deleteVisit(x._id)>  
+                    </li>
+                </ul>    
+            </div>
+        </div>
+            
+         
+</body>
+<script>
+    
+</script>
